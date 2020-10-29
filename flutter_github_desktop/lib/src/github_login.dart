@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_github_desktop/src/github.login.exception.dart';
+import 'package:flutter_github_desktop/src/json.accept.http.client.dart';
 import 'package:oauth2/oauth2.dart' as oauth2;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -70,7 +71,7 @@ class _GithubLoginState extends State<GithubLoginWidget> {
       _authorizationEndpoint,
       _tokenEndpoint,
       secret: widget.githubClientSecret,
-      httpClient: _JsonAcceptingHttpClient(),
+      httpClient: JsonAcceptingHttpClient(),
     );
     var authorizationUrl =
     grant.getAuthorizationUrl(redirectUrl, scopes: widget.githubScopes);
@@ -102,21 +103,5 @@ class _GithubLoginState extends State<GithubLoginWidget> {
     _redirectServer = null;
     return params;
   }
-}
-
-class _JsonAcceptingHttpClient extends http.BaseClient {
-  final _httpClient = http.Client();
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers['Accept'] = 'application/json';
-    return _httpClient.send(request);
-  }
-}
-
-class GithubLoginException implements Exception {
-  const GithubLoginException(this.message);
-  final String message;
-  @override
-  String toString() => message;
 }
 
