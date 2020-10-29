@@ -5,8 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_github_desktop/src/github_gql/github_queries.data.gql.dart';
 import 'package:flutter_github_desktop/src/github_gql/github_queries.req.gql.dart';
 
-
-
 class AssignedIssuesList extends StatefulWidget {
   const AssignedIssuesList({@required this.link});
   final Link link;
